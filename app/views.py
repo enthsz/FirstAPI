@@ -10,18 +10,18 @@ from rest_framework.decorators import permission_classes
 
 # Create your views here.
 @api_view(['GET'])
-@permission_classes([IsAuthenticatedOrReadOnly])
+@permission_classes([IsAuthenticated])
 def listTask(request):
     if request.user.is_authenticated:
         tasks = Task.objects.filter(owner=request.user)
     else:
-        tasks = Task.objects.none()
+        return Response('adwwd ')
     serializer = TaskSerializers(tasks, many=True)
     return Response(serializer.data)
     
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticatedOrReadOnly])
+@permission_classes([IsAuthenticated])
 def list_detail(request, pk):
     task = Task.objects.get(pk=pk)
     serializer = TaskSerializers(task, many=False)
