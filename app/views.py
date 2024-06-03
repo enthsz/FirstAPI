@@ -21,13 +21,9 @@ def listTask(request):
     
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def list_detail(request, pk):
     task = Task.objects.get(pk=pk)
-
-    if task.owner != request.user:
-        return Response({'detail': 'You have no permission to view this task'})
-
     serializer = TaskSerializers(task, many=False)
     return Response(serializer.data)
 
@@ -43,10 +39,8 @@ def create_task(request):
 @permission_classes([IsAuthenticated])
 def delete_task(request, pk):
     task = Task.objects.get(pk=pk)
-
     if task.owner != request.user:
-        return Response({'detail': 'You have no permission to delete this task'}, status=status.HTTP_403_FORBIDDEN)
-
+        return Response(status=status.HTTP_403_FORBIDDEN)
     task.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -56,8 +50,9 @@ def delete_task(request, pk):
 def list_update(request, pk):
     task = Task.objects.get(pk=pk)
     if task.owner != request.user:
-        return Response({'detail': 'You have no permission to update this task'}, status=status.HTTP_403_FORBIDDEN)
+        return Response(status=status.HTTP_403_FORBIDDEN)
     serializer = TaskSerializers(instance=task, data=request.data)
     if serializer.is_valid():
         serializer.save(owner=request.user)
     return Response(serializer.data)
+
