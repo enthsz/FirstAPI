@@ -17,19 +17,21 @@ from rest_framework.permissions import AllowAny
 def listTask(request):
     if request.user.is_authenticated:
         tasks = Task.objects.filter(owner=request.user)
+        serializer = TaskSerializers(tasks, many=True)
+        if not tasks.exists():
+            return Response({'message': 'You currently have no tasks.'}, status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.data)
     else:
-        Task.objects.none()
-    serializer = TaskSerializers(tasks, many=True)
-    return Response(serializer.data)
+        return Response({'error': 'You are not authenticated.'}, status=status.HTTP_401_UNAUTHORIZED)
     
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def list_detail(request, pk):
-    task = Task.objects.get(pk=pk)
+def list_detail(request, task_name):
+    task = Task.objects.get(name=task_name)
 
     if task.owner != request.user:
-        return Response('You dont have the access to this task', status=status.HTTP_403_FORBIDDEN)
+        return Response({'detail': 'Voce nao tem acesso a essa tarefa'}, status=status.HTTP_403_FORBIDDEN)
 
 
     serializer = TaskSerializers(task, many=False)
@@ -43,20 +45,20 @@ def create_task(request):
         serializer.save(owner=request.user)
     return Response(serializer.data)
 
-@api_view(['DELETE', 'GET'])
+@api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def delete_task(request, pk):
-    task = Task.objects.get(pk=pk)
+def delete_task(request, task_name):
+    task = Task.objects.get(name=task_name)
     if task.owner != request.user:
         return Response('You dont have permission to delete this task',status=status.HTTP_403_FORBIDDEN)
     task.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
+    return Response({'message': 'Task deleted.'}, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def list_update(request, pk):
-    task = Task.objects.get(pk=pk)
+def list_update(request, task_name):
+    task = Task.objects.get(name=task_name)
     if task.owner != request.user:
         return Response('You dont have permission to update this task',status=status.HTTP_403_FORBIDDEN)
     serializer = TaskSerializers(instance=task, data=request.data)

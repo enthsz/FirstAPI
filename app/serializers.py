@@ -1,10 +1,7 @@
 from rest_framework import serializers
-from . models import Task, Account
+from . models import Task
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-
-from rest_framework.validators import UniqueValidator
-
 
 
 
@@ -12,7 +9,7 @@ from rest_framework.validators import UniqueValidator
 class TaskSerializers(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['id','name', 'content', 'owner']
+        fields = ['name', 'content']
 
 
 class RegisterSerializer(serializers.ModelSerializer):

@@ -12,10 +12,3 @@ class Task(models.Model):
     def __str__(self):
         return self.name
     
-class Account(models.Model):
-    username = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    data_updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.username
