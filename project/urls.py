@@ -7,6 +7,7 @@ urlpatterns = [
     path('', include('app.urls'))
 ]
 
+# tela de login
 urlpatterns += [
     path('api-auth/', include('rest_framework.urls'))
 ]
