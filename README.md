@@ -104,7 +104,7 @@ Este projeto é uma API de CRUD (Create, Read, Update, Delete) desenvolvida com 
 ### Operações CRUD
 
 - **Criar um Registro:**
-    - URL: `/create/task/`
+    - URL: `/create-task/`
     - Método: `POST`
     - Cabeçalho: `Authorization: Bearer <token_de_acesso>`
     - Corpo da Requisição:
