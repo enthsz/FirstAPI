@@ -16,6 +16,46 @@ Este projeto é uma API de CRUD (Create, Read, Update, Delete) desenvolvida com 
 - **Django REST Framework**: Ferramenta poderosa e flexível para construção de APIs.
 - **SimpleJWT**: Biblioteca para implementação de autenticação baseada em JWT.
 
+## Instalação das Dependências
+
+Para instalar as dependências necessárias para executar este projeto, siga estas etapas:
+
+1. Certifique-se de ter o Python instalado em sua máquina. Se ainda não o tiver, baixe e instale a versão mais recente do Python no site oficial: [python.org](https://www.python.org/downloads/).
+
+2. Clone este repositório em sua máquina local:
+
+    ```bash
+    git clone https://github.com/enthsz/FirstAPI.git
+    ```
+
+3. Navegue até o diretório do projeto:
+
+    ```bash
+    cd seu-projeto
+    ```
+
+4. Crie um ambiente virtual para o projeto (opcional, mas recomendado):
+
+    ```bash
+    python -m venv venv
+    ```
+
+5. Ative o ambiente virtual:
+
+    ```bash
+    source venv/bin/activate  # No Windows, use `venv\Scripts\activate`
+    ```
+
+6. Instale as dependências listadas no arquivo `requirements.txt`:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+Isso instalará todas as dependências necessárias para o projeto. Se você encontrar algum problema durante a instalação das dependências, verifique se todos os pré-requisitos foram atendidos e se o ambiente virtual está ativado corretamente.
+
+
+
 ## Configuração do Ambiente
 
 ### Pré-requisitos
